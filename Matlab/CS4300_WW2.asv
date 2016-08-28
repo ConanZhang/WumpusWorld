@@ -39,11 +39,11 @@ for p = 0:14
             count= count+1;
         end
     end
-    percentage_solved = count/N;
-    experiment(p+1 , 1) = p;
-    experiment(p+1, 2) = percentage_solved;
+    experiment(p , 1) = p;
+    percentage_solved = count/N
+    
 end
-experiment
+
 
 
 
