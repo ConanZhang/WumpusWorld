@@ -23,28 +23,27 @@ agent.gold = 0;  % grabbed gold in same room
 agent.dir = 0;  % facing right
 agent.succeed = 0;  % has gold and climbed out
 agent.climbed = 0; % climbed out
-N = 5000;
+
 %board = [3,1,2,0;1,0,0,0;0,0,1,1;0,0,0,0];
 %trace = CS4300_WW1(max_steps,f_name,board);
-avg_solved= 0 ;
 
-experiment = zeros(15, 2);
+N = 10;
+trials = 5;
+val = containers.Map('KeyType','double','ValueType','any');
 
 for p = 0:14
-    count = 0;
-    for k = 1:N
-        board = CS4300_gen_board_A1(p);
-        solved = CS4300_Wumpus_solvable(board);
-        if solved==1
-            count= count+1;
+    experiment = zeros(trials, 1);
+    for i = 0:trials
+        count = 0;
+        for j = 1:N
+            board = CS4300_gen_board_A1(p);
+            solved = CS4300_Wumpus_solvable(board);
+            if solved==1
+                count= count+1;
+            end
         end
+        percentage_solved = count/N;
+        experiment(i+1, 1) = percentage_solved;
     end
-    percentage_solved = count/N;
-    experiment(p+1 , 1) = p;
-    experiment(p+1, 2) = percentage_solved;
+    val(p+1) = experiment;
 end
-experiment
-
-
-
-
