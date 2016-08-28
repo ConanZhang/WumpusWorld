@@ -47,3 +47,8 @@ for p = 0:14
     end
     val(p+1) = experiment;
 end
+% TODO Calculate variance/mean to evaluate confidence interval 95%
+
+t= CS4300_WW1(50,'CS4300_agent1',[0,1,0,0;0,0,1,0;0,3,2,0;0,0,0,0]);
+M = CS4300_show_trace(t,1);
+movie(M)
