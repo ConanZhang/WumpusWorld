@@ -19,7 +19,7 @@ function action = CS4300_agent1( percept )
 % Call:
 %     a = CS4300_Example1([0,1,0,0,0]);
 % Author:
-%     Conan Chang and Rajul Ramchandani
+%     Conan Zhang and Rajul Ramchandani
 %     UU
 %     Fall 2016
 %
