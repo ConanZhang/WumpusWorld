@@ -36,8 +36,8 @@ M = zeros(1,3);
 V = zeros(1,3);
 CI = zeros(1,3);
 
-M = mean(res);
-V = var(res);
-CI1 = M - 1.645*sqrt(V/num_trials);
-CI2 = M + 1.645*sqrt(V/num_trials);
+M = mean(res)
+V = var(res)
+CI1 = M - 1.645*sqrt(V/num_trials)
+CI2 = M + 1.645*sqrt(V/num_trials)
 tch = 0;

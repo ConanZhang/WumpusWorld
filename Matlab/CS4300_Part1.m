@@ -1,16 +1,18 @@
-function result = CS4300_Part1(N)
+function results = CS4300_Part1(N)
 % CS4300_Part1 
 % On input:
 %     N (int): Number of Boards
 % On output:
-%       
+%     results : An array containing mean, variance, 
+%               and 95% confidence intervals for 0 to 14 pits
 % Call:
-%     t = CS4300_WW1(50,'CS4300_Example2');
+%     results = CS4300_Part1(2000);
 % Author:
 %     Conan Zhang and Rajul Ramchandani
 %     UU
 %     Fall 2016
 %
+
 results = zeros (15,5);
 wb = waitbar(0, 'Results');
 
@@ -29,11 +31,3 @@ for p = 0:14
 end
 
 close(wb);
-results
-
-% t= CS4300_WW1(50,'CS4300_agent1',[0,1,0,0;0,0,1,0;0,3,2,0;0,0,0,0]);
-% M = CS4300_show_trace(t,1);
-% movie(M)
-%Part 2
-%t= CS4300_WW1(50,'CS4300_agent1',[0,1,2,0;1,0,0,0;0,0,1,1;0,0,0,0]); %board given in Part 2
-%data = CS4300_get_data(t);
