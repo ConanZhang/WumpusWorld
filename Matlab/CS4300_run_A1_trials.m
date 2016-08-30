@@ -50,7 +50,7 @@ tch = 0;
 % ylabel('Gold Reached (Boolean)')
 
 % Plot for Step Count
-plot(res(:,2));
-title('Figure 3: Number of Steps Taken')
-xlabel('Trial')
-ylabel('Number of Steps')
+% plot(res(:,2));
+% title('Figure 3: Number of Steps Taken')
+% xlabel('Trial')
+% ylabel('Number of Steps')

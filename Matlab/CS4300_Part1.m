@@ -23,7 +23,7 @@ for p = 0:14
         board = CS4300_gen_board_A1(p);
         solvable(j) = CS4300_Wumpus_solvable(board);
     end
-    results(p+1 , 1) = p;
+    results(p+1, 1) = p;
     results(p+1, 2) = mean(solvable);
     results(p+1, 3) = var(solvable);
     results(p+1, 4) = results(p+1, 2) - 1.645*sqrt(results(p+1, 3)/N);
