@@ -42,10 +42,15 @@ CI1 = M - 1.645*sqrt(V/num_trials);
 CI2 = M + 1.645*sqrt(V/num_trials);
 tch = 0;
 
-plot(res(:,1).);
-title('Gold Reached over 2000 Trials')
-xlabel('Number of Trials') % x-axis label
-ylabel('sine and cosine values') % y-axis label
-legend('y = sin(x)','y = cos(x)','Location','southwest')
+% Plot for Gold Reached
+% plot(res(:,1));
+% set(gca,'YTick',[0, 1] );
+% title('Figure 2: Gold Reached for 2000 Trials')
+% xlabel('Trial')
+% ylabel('Gold Reached (Boolean)')
 
-% plot(res(:,2));
+% Plot for Step Count
+plot(res(:,2));
+title('Number of Steps Needed to Reach Gold')
+xlabel('Trial')
+ylabel('Number of Steps')

@@ -45,12 +45,12 @@ tch = 0;
 % Plot for Gold Reached
 % plot(res(:,1));
 % set(gca,'YTick',[0, 1] );
-% title('Gold Reached for 2000 Trials')
+% title('Figure 2: Gold Reached for 2000 Trials')
 % xlabel('Trial')
 % ylabel('Gold Reached (Boolean)')
 
 % Plot for Step Count
-% plot(res(:,2));
-% title('Number of Steps Needed to Reach Gold')
-% xlabel('Trial')
-% ylabel('Number of Steps')
+plot(res(:,2));
+title('Figure 3: Number of Steps Taken')
+xlabel('Trial')
+ylabel('Number of Steps')
