@@ -32,18 +32,19 @@ ROTATE_LEFT = 3;
 if isempty(state)
     state = 0;
 else 
-    state = round(rand(1)*2);
+    state = randi([1,3],1);
+
 end
 
 switch state
-    case 0
-        action = FORWARD;
-        
     case 1
-        action = ROTATE_LEFT;
+        action = FORWARD;
         
     case 2
         action = ROTATE_RIGHT;
+        
+    case 3
+        action = ROTATE_LEFT;
 end
 end
 
