@@ -30,7 +30,7 @@ ROTATE_RIGHT = 2;
 ROTATE_LEFT = 3;
 
 if isempty(state)
-    state = 0;
+    state = 1;
 else 
     state = randi([1,3],1);
 
