@@ -26,8 +26,8 @@ for p = 0:14
     results(p+1, 1) = p;
     results(p+1, 2) = mean(solvable);
     results(p+1, 3) = var(solvable);
-    results(p+1, 4) = results(p+1, 2) - 1.645*sqrt(results(p+1, 3)/N);
-    results(p+1, 5) = results(p+1, 2) + 1.645*sqrt(results(p+1, 3)/N);
+    results(p+1, 4) = results(p+1, 2) - 1.96*sqrt(results(p+1, 3)/N);
+    results(p+1, 5) = results(p+1, 2) + 1.96*sqrt(results(p+1, 3)/N);
 end
 
 close(wb);
