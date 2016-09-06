@@ -33,7 +33,6 @@ if isempty(state)
     state = 1;
 else 
     state = randi([1,3],1);
-
 end
 
 switch state

@@ -1,0 +1,30 @@
+classdef PriorityQueue
+    % PRIORITYQUEUE A Priority Queue used for A*
+    % A simple queue that sorts the priority ascending or descending
+    
+    properties
+        queue = zeros(1, 16)
+    end
+    
+    methods
+        function obj = insert(obj, node, insertBefore)
+            if insertBefore == 1
+                for i = 1:16
+                    if node.value <= obj.queue(i, 1)
+                        obj.queue = [obj.queue(:,1:i) node obj.queue(:,i+1:end)];
+                        break
+                    end
+                end
+            else
+                for i = 1:16
+                    if node.value <= obj.queue(i, 1)
+                        obj.queue = [obj.queue(:,1:i-1) node obj.queue(:,i:end)];
+                        break
+                    end
+                end
+            end   
+        end
+    end
+    
+end
+
