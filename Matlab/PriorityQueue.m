@@ -3,7 +3,7 @@ classdef PriorityQueue
     % A simple queue that sorts the priority ascending or descending
     
     properties
-        queue = {};
+        queue =  {};
     end
     
     methods
@@ -32,6 +32,15 @@ classdef PriorityQueue
 
             if success == 0
                 obj.queue{end+1} = node;
+            end
+        end
+        
+        function [node, obj] = pop(obj)
+            if isempty(obj.queue) == 1
+                return;
+            else
+               node = obj.queue{1, 1};
+               obj.queue = obj.queue(:,2:end);
             end
         end
     end

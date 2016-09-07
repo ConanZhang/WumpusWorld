@@ -46,11 +46,43 @@ function [solution,nodes]  = CS4300_Wumpus_A_star1(board,initial_state, goal_sta
 %     UU
 %     Fall 2016
 %
-priority_queue = PriorityQueue;
+nodes = {};
+root = {0, 0, {1,1,0}, 0, 0, 0, feval(h_name,initial_state, goal_state), []};
+nodes{end+1} = root;
+frontier = PriorityQueue;
+frontier = insert(frontier, root, option);
+explored = {};
 
-priority_queue = insert(priority_queue, [0,0,0,0,1],1);
-priority_queue = insert(priority_queue,[0,0,0,0,3],1);
-priority_queue = insert(priority_queue,[1,0,0,0,2],1);
-priority_queue = insert(priority_queue,[2,0,0,0,2],1);
+% TODO: Calculate f = h + g
 
-celldisp(priority_queue.queue)
+while 1
+     if isempty(frontier)
+         so = [];
+         return
+     else
+         node = pop(frontier);
+         explored{end+1} = node;
+         nodes{end+1} = node;
+     end
+     
+     if node{1, 3}{1,1} == goal_state(1, 1) && node{1,3}{1, 2} == goal_state(1,2)
+         so = traceback(node, initial_state);
+         break; 
+     end
+end
+
+end
+
+function solution_nodes = traceback(node, initial_state)
+    while node{1,1} ~= initial_state(1,1) && node(1,2) ~= initial_state(1,2)
+       solution_nodes(end+1) = node;
+       node = nodes(node{1,1});
+    end
+end
+
+% frontier = insert(frontier, {0,0, {0,900},0,1},{0});
+% frontier = insert(frontier,{0,0,0,0,3},1);
+% frontier = insert(frontier,{1,0,0,0,2},1);
+% frontier = insert(frontier,{2,0,0,0,2},1);
+
+% celldisp(frontier.queue)
