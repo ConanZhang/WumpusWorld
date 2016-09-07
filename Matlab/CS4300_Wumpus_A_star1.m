@@ -47,13 +47,13 @@ function [solution,nodes]  = CS4300_Wumpus_A_star1(board,initial_state, goal_sta
 %     Fall 2016
 %
 nodes = {};
-root = {0, 0, {1,1,0}, 0, 0, 0, feval(h_name,initial_state, goal_state), []};
+root = {0, 0, {1,1,0}, 0, feval(h_name,initial_state, goal_state), 0, feval(h_name,initial_state, goal_state), []};
 nodes{end+1} = root;
 frontier = PriorityQueue;
 frontier = insert(frontier, root, option);
 explored = {};
 
-% TODO: Calculate f = h + g
+
 
 while 1
      if isempty(frontier)
@@ -67,8 +67,16 @@ while 1
      
      if node{1, 3}{1,1} == goal_state(1, 1) && node{1,3}{1, 2} == goal_state(1,2)
          so = traceback(node, initial_state);
-         break; 
+         return;
+     else
+         
+        % TODO: Calculate f = h + g
+        %put children in the children part of the parent node once you
+        %explore 
+     
      end
+     
+     
 end
 
 end
