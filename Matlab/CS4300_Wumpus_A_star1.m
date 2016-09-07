@@ -48,9 +48,9 @@ function [solution,nodes]  = CS4300_Wumpus_A_star1(board,initial_state, goal_sta
 %
 priority_queue = PriorityQueue;
 
-priority_queue = insert(priority_queue, [0,0,0,0,1],0);
-priority_queue = insert(priority_queue,[0,0,0,0,3],0);
-priority_queue = insert(priority_queue,[1,0,0,0,2],0);
-priority_queue = insert(priority_queue,[2,0,0,0,2],0);
+priority_queue = insert(priority_queue, [0,0,0,0,1],1);
+priority_queue = insert(priority_queue,[0,0,0,0,3],1);
+priority_queue = insert(priority_queue,[1,0,0,0,2],1);
+priority_queue = insert(priority_queue,[2,0,0,0,2],1);
 
 celldisp(priority_queue.queue)
