@@ -13,12 +13,12 @@ function [solution,nodes]  = CS4300_Wumpus_A_star1(board,initial_state, goal_sta
 %     solution (nx4 array): n states from start to goal states
 %       (x,y,dir,action)
 %     nodes (search tree data structure): nodes of search tree
-%       (i).parent (int): index of parent
+%       (i).parent (int): pair(1) of parent
 %       (i). level (int): level in tree
-%       (i).state (1x3 vector): x,y,dir of index
+%       (i).state (1x3 vector): x,y,dir of pair(1)
 %       (i).action (int): action taken to get to this state
-%       (i).cost (int): path cost to this index fro mroot
-%       (i).children (1xk vector): indexes of index's children
+%       (i).cost (int): path cost to this pair(1) fro mroot
+%       (i).children (1xk vector): indexes of pair(1)'s children
 % Call:
 %     b = CS4300_gen_board_A1(2)
 %   b =
@@ -43,16 +43,18 @@ function [solution,nodes]  = CS4300_Wumpus_A_star1(board,initial_state, goal_sta
 %     h
 %     children  
 % Author:
-%     T. Henderson
+%     T. Henderson & Rajul Ramchandani & Conan Zhang
 %     UU
-%     Fall 2014
+%     Fall 2016
 %
 
 nodes(1).parent = [];
 nodes(1).level = 0;
 nodes(1).state = initial_state;
 nodes(1).action = 0;
-nodes(1).cost = 0;
+nodes(1).g = 0;
+nodes(1).h = CS4300_A_star_Man(initial_state, goal_state);
+nodes(1).cost = nodes(1).g + nodes(1).h;
 nodes(1).children = [];
 num_nodes = 1;
 frontier = PriorityQueue;
@@ -64,31 +66,31 @@ while 1==1
         solution = [];
         return
     end
-    index = pop(frontier);
-    explored = [explored,index];
-    if CS4300_Wumpus_solution(nodes(index).state,goal_state)%checks if the current state is the goal state
-        solution = CS4300_traceback(nodes,index);
+    pair = pop(frontier);
+    explored = [explored,pair(1)];
+    if CS4300_Wumpus_solution(nodes(pair(1)).state,goal_state)%checks if the current state is the goal state
+        solution = CS4300_traceback(nodes,pair(1));
         return
     end
-    next_list = [];
     
-    % TODO: change next_state assignments
-    %loop to create all possible children
+    % TODO: change transition assignments
+    % loop to create all possible children
     for action = 1:3
-        next_state = CS4300_Wumpus_transition(nodes(index).state, action,board); %checks to see if agent can complete the action
-        if next_state(1)>0 && CS4300_Wumpus_new_state(next_state,frontier,explored,nodes) %check if the new states have already been encountered in the past
+        transition = CS4300_Wumpus_transition(nodes(pair(1)).state, action,board); %checks to see if agent can complete the action
+        next_state = transition(:,1:3);
+        if transition(4)>0 && CS4300_Wumpus_new_state(next_state,frontier,explored,nodes) %check if the new states have already been encountered in the past
             num_nodes = num_nodes + 1;
-            nodes(num_nodes).parent = index;
-            nodes(num_nodes).level = nodes(index).level + 1;
+            nodes(num_nodes).parent = pair(1);
+            nodes(num_nodes).level = nodes(pair(1)).level + 1;
             nodes(num_nodes).state = next_state;
             nodes(num_nodes).action = action;
-            nodes(num_nodes).g = nodes(index).g + 1;
-            nodes(num_nodes).h = CS4300_A_star_Man(nodes(num_nodes),goal_state);
+            nodes(num_nodes).g = nodes(pair(1)).g + 1;
+            nodes(num_nodes).h = CS4300_A_star_Man(nodes(num_nodes).state,goal_state);
             nodes(num_nodes).cost = nodes(num_nodes).g + nodes(num_nodes).h;
-            nodes(num_nodes).children = [];%create empty child array for this new index            
-            nodes(index).children = [nodes(index).children,num_nodes]; % add this new index to the parent's children
+            nodes(num_nodes).children = [];%create empty child array for this new pair(1)            
+            nodes(pair(1)).children = [nodes(pair(1)).children,num_nodes]; % add this new pair(1) to the parent's children
             %next_list = [num_nodes,next_list];
-            insert(frontier, [num_nodes, nodes(num_nodes).cost]); 
-    %    end
+            insert(frontier, [num_nodes, nodes(num_nodes).cost], option); 
+        end
     end    
 end

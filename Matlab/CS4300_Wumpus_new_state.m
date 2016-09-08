@@ -23,17 +23,17 @@ function is_new =  CS4300_Wumpus_new_state(next_state,frontier,explored,nodes)
 is_new = 1;
 
 % check frontier
-for i = 1:Length(frontier)
-    node = nodes(frontier.queue(1,i));
-    if(node(1) == next_state(1) && node(2) == next_state(2))
+for i = 1:size(frontier.queue)
+    node = nodes(frontier.queue{1,i}(1));
+    if(node.state(1) == next_state(1) && node.state(2) == next_state(2))
         is_new = 0;
     end
 end
 
 % check explored
-for i = 1:Length(explored)
+for i = 1:size(explored)
     node = nodes(explored(i));
-    if(node(1) == next_state(1) && node(2) == next_state(2))
+    if(node.state(1) == next_state(1) && node.state(2) == next_state(2))
         is_new = 0;
     end
 end

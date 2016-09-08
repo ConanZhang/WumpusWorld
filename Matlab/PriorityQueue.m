@@ -44,6 +44,14 @@ classdef PriorityQueue
                obj.queue = obj.queue(:,2:end);
             end
         end
+        
+        function [pair, obj] = get(obj)
+            if isempty(obj.queue) == 1
+                return;
+            else
+               pair = obj.queue{1, 1};
+            end
+        end
     end
     
 end

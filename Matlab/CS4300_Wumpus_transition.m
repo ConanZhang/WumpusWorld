@@ -1,4 +1,4 @@
-function [can_transition , next_state] = CS4300_Wumpus_transition(state, action, board)
+function [next_state] = CS4300_Wumpus_transition(state, action, board)
 % CS4300_Wumpus_transition - test if a Wumpus board has a solution
 % On input:
 %       state (1x3 vector): x,y,dir of node
@@ -19,12 +19,11 @@ function [can_transition , next_state] = CS4300_Wumpus_transition(state, action,
 %     Fall 2016
 %
 can_transition = 1;
-
+    x = state(1);
+    y = state(2);
+    dir = state(3);
+    
     if action ==1
-        x = state(1);
-        y = state(2);
-        dir = state(3);
-        
         %move to position first and then check whether the agent survived
         if dir==0
             y=y+1;
@@ -43,25 +42,20 @@ can_transition = 1;
         elseif board(transpose_x(x), y)==1 || board(transpose_x(x), y)==3
             can_transition = 0;
         end          
-       
-    
     elseif action == 2 %Right
         if dir==0
             dir = 3;
         else
             dir = dir - 1;
         end
-    else if action == 3 %Left
+    elseif action == 3 %Left
         if dir==3
             dir = 0;
         else 
             dir = dir + 1;
         end
     end
-    next_state = [x,y,dir];
-end
-
-
+    next_state = [x,y,dir,can_transition];
 end
 
 function [x] = transpose_x( n)

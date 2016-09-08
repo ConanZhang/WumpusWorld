@@ -15,4 +15,5 @@ function [is_solution]  = CS4300_Wumpus_solution(current_state, goal_state)
 is_solution = 0;
 if current_state(1) == goal_state(1) && current_state(2) == goal_state(2)
     is_solution = 1;
+end
     
