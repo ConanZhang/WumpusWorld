@@ -1,4 +1,4 @@
-function [can_transition , next_state] = CS4300_Wumpus_transition(state, action, board)
+function [can_transition , ] = CS4300_Wumpus_transition(state, action, board)
 % CS4300_Wumpus_transition - test if a Wumpus board has a solution
 % On input:
 %       state (1x3 vector): x,y,dir of node
@@ -58,7 +58,7 @@ can_transition = 1;
             dir = dir + 1;
         end
     end
-    next_state = [x,y,dir];
+    new_state = [x,y,dir];
 end
 
 
