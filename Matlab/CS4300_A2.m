@@ -21,9 +21,9 @@ for i = 1:N
     waitbar(i/N);    
     board = CS4300_gen_board(0.2);
     gold_location = find_gold(board);
-    [solution, nodes] = CS4300_Wumpus_A_star1(board,[1,1,0],gold_location,'CS4300_A_star_Man',1);
+    [solution, nodes] = CS4300_Wumpus_A_star1(board,[1,1,0],gold_location,'CS4300_A_star_Man',2);        
     node_size = size(nodes);
-    nodes_generated(i) = node_size(1);
+    nodes_generated(i) = node_size(2);
 end
 results(1, 1) = mean(nodes_generated);
 results(1, 2) = var(nodes_generated);
@@ -31,6 +31,18 @@ results(1, 3) = results(1, 1) - 1.96*sqrt(results(1, 2)/N);
 results(1, 4) = results(1, 1) + 1.96*sqrt(results(1, 2)/N);
 
 close(wb);
+
+% Plot for Nodes Generated
+plot(nodes_generated);
+title('Figure 4: Nodes Generated using Option 2 for 2000 Trials')
+xlabel('Trial')
+ylabel('Nodes Generated')
+
+% Histogram for Nodes Generated
+% hist(nodes_generated);
+% title('Figure 2: Nodes Generated using Option 2 for 2000 Trials')
+% xlabel('Nodes Generated')
+% ylabel('Number of Trials')
 
 end
 
