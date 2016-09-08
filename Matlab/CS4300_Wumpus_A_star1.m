@@ -1,4 +1,4 @@
-function [solution,nodes]  = CS4300_Wumpus_A_star1(board,initial_state, goal_state,h_name,option)
+function [solution,nodes]  = CS4300_Wumpus_A_star1(board,initial_state, goal_state, h_name, option)
 % CS4300_Wumpus_DFS - DFS on Wumpus board finding path to goal
 % On input:
 %     board (4x4 array): Wumpus board
@@ -60,12 +60,11 @@ frontier = insert(frontier, [1, CS4300_A_star_Man(initial_state, goal_state)]);
 explored = [];
 
 while 1==1
-    if isempty(frontier)
+    if isempty(frontier.queue)
         solution = [];
         return
     end
-    node = frontier(1);
-    frontier = frontier(2:end);
+    node = pop(frontier);
     explored = [explored,node];
     if CS4300_Wumpus_solution(nodes(node).state,goal_state)%checks if the current state is the goal state
         solution = CS4300_traceback(nodes,node);
@@ -88,12 +87,8 @@ while 1==1
             nodes(num_nodes).cost = nodes(num_nodes).g + nodes(num_nodes).h;
             nodes(num_nodes).children = [];%create empty child array for this new node            
             nodes(node).children = [nodes(node).children,num_nodes]; % add this new node to the parent's children
-            next_list = [num_nodes,next_list];
+            %next_list = [num_nodes,next_list];
+            insert(frontier, [num_nodes, nodes(num_nodes).cost]); 
         end
-    end
-    frontier = [next_list(end:-1:1),frontier];
-    
-    
-    
-    
+    end    
 end

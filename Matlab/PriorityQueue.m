@@ -2,7 +2,7 @@ classdef PriorityQueue
     % PRIORITYQUEUE A Priority Queue used for A*
     % A simple queue that sorts the priority ascending or descending
     
-    properties
+    properties (Access = public)
         queue =  {};
     end
     
