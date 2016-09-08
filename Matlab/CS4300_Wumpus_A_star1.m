@@ -1,96 +1,99 @@
 function [solution,nodes]  = CS4300_Wumpus_A_star1(board,initial_state, goal_state,h_name,option)
-% CS4300_Wumpus_A_star1 - A* algorithm for Wumpus world
+% CS4300_Wumpus_DFS - DFS on Wumpus board finding path to goal
 % On input:
-%     board (4x4 int array): Wumpus board layout
-%       0: means empty cell
-%       1: means a pit in cell
-%       2: means gold (only) in cell
-%       3: means Wumpus (only) in cell
-%       4: means gold and Wumpus in cell
-%     initial_state (1x3 vector): x,y,dir state
-%     goal_state (1x3 vector): x,y,dir state
-%     h_name (string): name of heuristic function
-%     option (int): picks insertion strategy for equal cost states
-%        1: insert state before equal or greater than states
-%        2: insert after equal or less than states
+%     board (4x4 array): Wumpus board
+%       0: empty cell
+%       1: pit in cell
+%       2: gold in cell
+%       3: Wumpus in cell
+%       4: Wumpus and gold in cell
+%     initial_state (1x3 vector): x,y,dir values of initial state
+%     goal_state (1x3 vector): x,y,dir of final state
 % On output:
-%     solution (nx4 array): solution sequence of state and the action
-%     nodes (search tree data structure): search tree
-%       (i).parent (int): index of node’s parent
-%       (i).level (int): level of node in search tree
-%       (i).state (1x3 vector): [x,y,dir] state represented by node
-%       (i).action (int): action along edge from parent to node
-%       (i).g (int): path length from root to node
-%       (i).h (float): heuristic value (estimate from node to goal)
-%       (i).cost (float): g + h   (called f value in text)
-%       (i).children (1xk vector): list of node’s children
+%     solution (nx4 array): n states from start to goal states
+%       (x,y,dir,action)
+%     nodes (search tree data structure): nodes of search tree
+%       (i).parent (int): index of parent
+%       (i). level (int): level in tree
+%       (i).state (1x3 vector): x,y,dir of node
+%       (i).action (int): action taken to get to this state
+%       (i).cost (int): path cost to this node fro mroot
+%       (i).children (1xk vector): indexes of node's children
 % Call:
-%[so,no] = CS4300_Wumpus_A_star1([0,0,0,0;0,0,0,1;0,2,1,3;0,0,0,0], [1,1,0],[2,2,1],'CS4300_A_star_Man',1)
-% so =
+%     b = CS4300_gen_board_A1(2)
+%   b =
+%       0     0     0     1
+%       2     0     1     0
+%       0     0     0     0
+%       0     3     0     0
+%     [so,no] = CS4300_Wumpus_DFS(b,[1,1,0],[3,4,1])
+%   so =
 %     1     1     0     0
-%     2     1     0     1
-%     2     1     1     3
-%     2     2     1     1
-%
-% no = 1x9 struct array with fields:
-%    parent
-%    level
-%    state
-%    action
-%    cost
-%    g
-%    h
-%    children
+%     1     1     1     3
+%     1     2     1     1
+%     1     3     1     1
+%   no = 
+%     1x8 struct array with fields:
+%     parent
+%     level
+%     state
+%     action
+%     cost
+%     g
+%     h
+%     children  
 % Author:
-%     Rajul Ramchandani & Conan Zhang
+%     T. Henderson
 %     UU
-%     Fall 2016
+%     Fall 2014
 %
-nodes = {};
-root = {0, 0, {1,1,0}, 0, feval(h_name,initial_state, goal_state), 0, feval(h_name,initial_state, goal_state), []};
-nodes{end+1} = root;
+
+nodes(1).parent = [];
+nodes(1).level = 0;
+nodes(1).state = initial_state;
+nodes(1).action = 0;
+nodes(1).cost = 0;
+nodes(1).children = [];
+num_nodes = 1;
 frontier = PriorityQueue;
-frontier = insert(frontier, root, option);
-explored = {};
+frontier = insert(frontier, [1, CS4300_A_star_Man(initial_state, goal_state)]);
+explored = [];
 
-
-
-while 1
-     if isempty(frontier)
-         so = [];
-         return
-     else
-         node = pop(frontier);
-         explored{end+1} = node;
-         nodes{end+1} = node;
-     end
-     
-     if node{1, 3}{1,1} == goal_state(1, 1) && node{1,3}{1, 2} == goal_state(1,2)
-         so = traceback(node, initial_state);
-         return;
-     else
-         
-        % TODO: Calculate f = h + g
-        %put children in the children part of the parent node once you
-        %explore 
-     
-     end
-     
-     
-end
-
-end
-
-function solution_nodes = traceback(node, initial_state)
-    while node{1,1} ~= initial_state(1,1) && node(1,2) ~= initial_state(1,2)
-       solution_nodes(end+1) = node;
-       node = nodes(node{1,1});
+while 1==1
+    if isempty(frontier)
+        solution = [];
+        return
     end
+    node = frontier(1);
+    frontier = frontier(2:end);
+    explored = [explored,node];
+    if CS4300_Wumpus_solution(nodes(node).state,goal_state)%checks if the current state is the goal state
+        solution = CS4300_traceback(nodes,node);
+        return
+    end
+    next_list = [];
+    
+    %TODO: implement the two helper methods
+    %loop to create all possible children
+    for action = 1:3
+        next_state = CS4300_Wumpus_transition(nodes(node).state, action,board); %checks to see if agent can complete the action
+        if next_state(1)>0 & CS4300_Wumpus_new_state(next_state,frontier,explored,nodes) %check if the new states have already been encountered in the past
+            num_nodes = num_nodes + 1;
+            nodes(num_nodes).parent = node;
+            nodes(num_nodes).level = nodes(node).level + 1;
+            nodes(num_nodes).state = next_state;
+            nodes(num_nodes).action = action;
+            nodes(num_nodes).g = nodes(node).g + 1;
+            nodes(num_nodes).h = CS4300_A_star_Man(nodes(num_nodes),goal_state);
+            nodes(num_nodes).cost = nodes(num_nodes).g + nodes(num_nodes).h;
+            nodes(num_nodes).children = [];%create empty child array for this new node            
+            nodes(node).children = [nodes(node).children,num_nodes]; % add this new node to the parent's children
+            next_list = [num_nodes,next_list];
+        end
+    end
+    frontier = [next_list(end:-1:1),frontier];
+    
+    
+    
+    
 end
-
-% frontier = insert(frontier, {0,0, {0,900},0,1},{0});
-% frontier = insert(frontier,{0,0,0,0,3},1);
-% frontier = insert(frontier,{1,0,0,0,2},1);
-% frontier = insert(frontier,{2,0,0,0,2},1);
-
-% celldisp(frontier.queue)
