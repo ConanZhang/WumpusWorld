@@ -72,7 +72,7 @@ while 1==1
     end
     next_list = [];
     
-    %TODO: implement the two helper methods
+    
     %loop to create all possible children
     for action = 1:3
         next_state = CS4300_Wumpus_transition(nodes(node).state, action,board); %checks to see if agent can complete the action
