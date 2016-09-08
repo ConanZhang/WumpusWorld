@@ -15,17 +15,17 @@ can_transition = 1;
             y = y-1;
         elseif dir == 3
             x = x-1;
-            
+        end
             
         %if next is W or P
         %if edge of board and moving off of board 
         if x>5 || y>5 || y<1 || x<1
             can_transition = 0;
-        elseif board(transpose_coord(x), y)==1 || board(transpose_coord(x), y)==3
+        elseif board(transpose_x(x), y)==1 || board(transpose_x(x), y)==3
             can_transition = 0;
         end          
         
-        end
+    end
 end
 
 
