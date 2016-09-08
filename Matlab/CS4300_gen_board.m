@@ -20,7 +20,7 @@ function board = CS4300_gen_board(p)
 PIT = 1;
 GOLD = 2;
 WUMPUS = 3;
-BOTH = 4;
+BOTH = 2;
 
 done = 0;
 while done==0

@@ -12,6 +12,6 @@ function h = CS4300_A_star_Man(initial_state,goal_state)
 %     UU
 %     Fall 2016
 %
-x_distance = abs(initial_state(1,1) - goal_state(1,1));
-y_distance = abs(initial_state(1,2) - goal_state(1,2));
+x_distance = abs(initial_state(1) - goal_state(1));
+y_distance = abs(initial_state(2) - goal_state(2));
 h = x_distance + y_distance;
