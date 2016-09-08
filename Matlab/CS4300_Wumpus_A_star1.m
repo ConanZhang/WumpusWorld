@@ -15,10 +15,10 @@ function [solution,nodes]  = CS4300_Wumpus_A_star1(board,initial_state, goal_sta
 %     nodes (search tree data structure): nodes of search tree
 %       (i).parent (int): index of parent
 %       (i). level (int): level in tree
-%       (i).state (1x3 vector): x,y,dir of node
+%       (i).state (1x3 vector): x,y,dir of index
 %       (i).action (int): action taken to get to this state
-%       (i).cost (int): path cost to this node fro mroot
-%       (i).children (1xk vector): indexes of node's children
+%       (i).cost (int): path cost to this index fro mroot
+%       (i).children (1xk vector): indexes of index's children
 % Call:
 %     b = CS4300_gen_board_A1(2)
 %   b =
@@ -64,29 +64,29 @@ while 1==1
         solution = [];
         return
     end
-    node = pop(frontier);
-    explored = [explored,node];
-    if CS4300_Wumpus_solution(nodes(node).state,goal_state)%checks if the current state is the goal state
-        solution = CS4300_traceback(nodes,node);
+    index = pop(frontier);
+    explored = [explored,index];
+    if CS4300_Wumpus_solution(nodes(index).state,goal_state)%checks if the current state is the goal state
+        solution = CS4300_traceback(nodes,index);
         return
     end
     next_list = [];
     
-    
+    % TODO: change next_state assignments
     %loop to create all possible children
     for action = 1:3
-        next_state = CS4300_Wumpus_transition(nodes(node).state, action,board); %checks to see if agent can complete the action
-%        if next_state(1)>0 && CS4300_Wumpus_new_state(next_state,frontier,explored,nodes) %check if the new states have already been encountered in the past
+        next_state = CS4300_Wumpus_transition(nodes(index).state, action,board); %checks to see if agent can complete the action
+        if next_state(1)>0 && CS4300_Wumpus_new_state(next_state,frontier,explored,nodes) %check if the new states have already been encountered in the past
             num_nodes = num_nodes + 1;
-            nodes(num_nodes).parent = node;
-            nodes(num_nodes).level = nodes(node).level + 1;
+            nodes(num_nodes).parent = index;
+            nodes(num_nodes).level = nodes(index).level + 1;
             nodes(num_nodes).state = next_state;
             nodes(num_nodes).action = action;
-            nodes(num_nodes).g = nodes(node).g + 1;
+            nodes(num_nodes).g = nodes(index).g + 1;
             nodes(num_nodes).h = CS4300_A_star_Man(nodes(num_nodes),goal_state);
             nodes(num_nodes).cost = nodes(num_nodes).g + nodes(num_nodes).h;
-            nodes(num_nodes).children = [];%create empty child array for this new node            
-            nodes(node).children = [nodes(node).children,num_nodes]; % add this new node to the parent's children
+            nodes(num_nodes).children = [];%create empty child array for this new index            
+            nodes(index).children = [nodes(index).children,num_nodes]; % add this new index to the parent's children
             %next_list = [num_nodes,next_list];
             insert(frontier, [num_nodes, nodes(num_nodes).cost]); 
     %    end
