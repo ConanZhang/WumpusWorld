@@ -1,4 +1,23 @@
-function [can_transition] = CS4300_Wumpus_transition(state, action,board)
+function [can_transition] = CS4300_Wumpus_transition(state, action, board)
+% CS4300_Wumpus_transition - test if a Wumpus board has a solution
+% On input:
+%       state (1x3 vector): x,y,dir of node
+%       action (int): action taken to get to this state
+%     board (4x4 array): Wumpus board
+%       0: empty cell
+%       1: pit in cell
+%       2: gold in cell
+%       3: Wumpus in cell
+%       4: Wumpus and gold in cell
+% On output:
+%     can_transition: new state if transition is valid; else 0
+% Call:
+%     next_state = CS4300_Wumpus_transition(nodes(node).state, action,board);
+% Author:
+%     Rajul Ramchandani & Conan Zhang
+%     UU
+%     Fall 2016
+%
 can_transition = 1;
 
     if action ==1

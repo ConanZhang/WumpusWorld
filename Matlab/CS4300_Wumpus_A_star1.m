@@ -76,7 +76,7 @@ while 1==1
     %loop to create all possible children
     for action = 1:3
         next_state = CS4300_Wumpus_transition(nodes(node).state, action,board); %checks to see if agent can complete the action
-        if next_state(1)>0 && CS4300_Wumpus_new_state(next_state,frontier,explored,nodes) %check if the new states have already been encountered in the past
+%        if next_state(1)>0 && CS4300_Wumpus_new_state(next_state,frontier,explored,nodes) %check if the new states have already been encountered in the past
             num_nodes = num_nodes + 1;
             nodes(num_nodes).parent = node;
             nodes(num_nodes).level = nodes(node).level + 1;
@@ -89,7 +89,6 @@ while 1==1
             nodes(node).children = [nodes(node).children,num_nodes]; % add this new node to the parent's children
             %next_list = [num_nodes,next_list];
             insert(frontier, [num_nodes, nodes(num_nodes).cost]); 
-            
-        end
+    %    end
     end    
 end
