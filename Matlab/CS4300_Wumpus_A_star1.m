@@ -20,13 +20,7 @@ function [solution,nodes]  = CS4300_Wumpus_A_star1(board,initial_state, goal_sta
 %       (i).cost (int): path cost to this pair(1) fro mroot
 %       (i).children (1xk vector): indexes of pair(1)'s children
 % Call:
-%     b = CS4300_gen_board_A1(2)
-%   b =
-%       0     0     0     1
-%       2     0     1     0
-%       0     0     0     0
-%       0     3     0     0
-%     [so,no] = CS4300_Wumpus_DFS(b,[1,1,0],[3,4,1])
+%   [so,no] = CS4300_Wumpus_A_star1([0,0,0,0;0,0,0,1;0,2,1,3;0,0,0,0],[1,1,0],[2,2,1],'CS4300_A_star_Man',1)
 %   so =
 %     1     1     0     0
 %     1     1     1     3
