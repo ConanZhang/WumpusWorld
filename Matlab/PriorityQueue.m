@@ -4,13 +4,14 @@ classdef PriorityQueue
     
     properties (Access = public)
         queue =  {};
+        size = 0;
     end
     
     methods
         %pair: [index number, priority number]
         function obj = insert(obj, pair, insertBefore)
             if isempty(obj.queue) == 1
-               obj.queue{1,1} = pair; 
+               obj.queue{1,1} = pair;
                return
             end
             
@@ -34,18 +35,21 @@ classdef PriorityQueue
             if success == 0
                 obj.queue{end+1} = pair;
             end
+            
+            % increase size
+            obj.size = obj.size + 1;
         end
         
-        function [pair, obj] = pop(obj)
+        function [obj] = pop(obj)
             if isempty(obj.queue) == 1
                 return;
             else
-               pair = obj.queue{1, 1};
                obj.queue = obj.queue(:,2:end);
+               obj.size = obj.size - 1;
             end
         end
         
-        function [pair, obj] = get(obj)
+        function [pair, obj] = peek(obj)
             if isempty(obj.queue) == 1
                 return;
             else

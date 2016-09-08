@@ -60,16 +60,19 @@ num_nodes = 1;
 frontier = PriorityQueue;
 frontier = insert(frontier, [1, CS4300_A_star_Man(initial_state, goal_state)]);
 explored = [];
+explored_size = 0;
 
 while 1==1
     if isempty(frontier.queue)
         solution = [];
         return
     end
-    pair = pop(frontier);
+    pair = peek(frontier);
+    frontier = pop(frontier);
     explored = [explored,pair(1)];
+    explored_size = explored_size + 1;
     if CS4300_Wumpus_solution(nodes(pair(1)).state,goal_state)%checks if the current state is the goal state
-        solution = CS4300_traceback(nodes,pair(1));
+        solution = CS4300_traceback(nodes,pair(1),initial_state);
         return
     end
     
@@ -78,7 +81,7 @@ while 1==1
     for action = 1:3
         transition = CS4300_Wumpus_transition(nodes(pair(1)).state, action,board); %checks to see if agent can complete the action
         next_state = transition(:,1:3);
-        if transition(4)>0 && CS4300_Wumpus_new_state(next_state,frontier,explored,nodes) %check if the new states have already been encountered in the past
+        if transition(4)>0 && CS4300_Wumpus_new_state(next_state,frontier,explored, explored_size, nodes) %check if the new states have already been encountered in the past
             num_nodes = num_nodes + 1;
             nodes(num_nodes).parent = pair(1);
             nodes(num_nodes).level = nodes(pair(1)).level + 1;
@@ -90,7 +93,7 @@ while 1==1
             nodes(num_nodes).children = [];%create empty child array for this new pair(1)            
             nodes(pair(1)).children = [nodes(pair(1)).children,num_nodes]; % add this new pair(1) to the parent's children
             %next_list = [num_nodes,next_list];
-            insert(frontier, [num_nodes, nodes(num_nodes).cost], option); 
+            frontier = insert(frontier, [num_nodes, nodes(num_nodes).cost], option); 
         end
     end    
 end
