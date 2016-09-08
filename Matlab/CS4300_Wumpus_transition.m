@@ -25,8 +25,8 @@ can_transition = 1;
             can_transition = 0;
         end          
         
-    end
-
+        end
+end
 
 
 end
